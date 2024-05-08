@@ -4,13 +4,13 @@
 package businessLogic;
 import java.time.LocalDate;
 
-public class Jugador {
+public class Player {
     private String username;
     private LocalDate fecha;
     private int contador;
     private boolean victoria;
     
-    public Jugador(String username){
+    public Player(String username){
         this.username = username;
         this.fecha = LocalDate.now();
         this.victoria = false;

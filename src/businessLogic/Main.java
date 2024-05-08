@@ -11,21 +11,21 @@ public class Main {
 //        jg.incrementarIntento();
 //        System.out.println(jg.getFecha() + " " + jg.getUsername() + " " + jg.getContador());
 //        
-        Juego juego = new Juego();
+        Game juego = new Game();
         
         int[] nums = new int[4];
-        juego.crearNumero(nums);
+        juego.createNumber(nums);
         
         for(int i=0; i< nums.length; i++){
             System.out.print(nums[i] + " ");
         }
         System.out.println("");
         
-       Inicio inicio = new Inicio();
+       //Inicio inicio = new Inicio();
        
        
-//       Jugador jugador = new Jugador("Santty");
-//       Tablero tablero = new Tablero(jugador);
+       Player jugador = new Player("Santty");
+       Board tablero = new Board(jugador);
         
         
         

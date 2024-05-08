@@ -13,14 +13,14 @@ import java.awt.geom.RoundRectangle2D;
  *  Displays the initial modal to start
  * 
  */
-public class Inicio implements ActionListener{    
+public class Start implements ActionListener{    
     
     MyFrame frame;
     JButton comenzar;
     JButton salir;
     JTextField textField;
     
-    public Inicio(){
+    public Start(){
         
         JLabel label = new JLabel();
         label.setText("Usuario:");
@@ -77,9 +77,9 @@ public class Inicio implements ActionListener{
                 System.out.println("Please Type your Username!");
                 
             } else {                
-                Jugador jugador = new Jugador(user);
-                Juego juego = new Juego();               
-                juego.iniciarJuego(jugador);
+                Player player = new Player(user);
+                Game game = new Game();               
+                game.startGame(player);
                 
                 this.frame.dispose();
                 

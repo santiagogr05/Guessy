@@ -10,13 +10,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 
-public class Tablero implements ActionListener {
+public class Board implements ActionListener {
     
+    Player jugador;
     MyFrame frame;
     TextField[][] textFields;
     JButton[][] keyboardButtons;
+    JButton reset;
+    JButton back;
+    JButton send;
     
-    public Tablero(Jugador jugador){
+    public Board(Player jugador){
+        this.jugador = jugador;
         frame = new MyFrame(0, 0 , 700, 800, "GUESSY");
         frame.setLocationRelativeTo(null);
         
@@ -89,7 +94,7 @@ public class Tablero implements ActionListener {
             JButton button = new JButton(Integer.toString(i)); // Create button with number label
             button.setFocusable(false);
             button.setBorder(BorderFactory.createEmptyBorder());
-            button.addActionListener(this);
+            button.addActionListener(this::ButtonActionPerformed);
             keyboardButtons[(i - 1) / 3][(i - 1) % 3] = button; 
             keyboard.add(button); 
         }
@@ -99,23 +104,26 @@ public class Tablero implements ActionListener {
         comms.setBounds(420, 10, 150, 150);
         comms.setLayout(null);
         
-        JButton send = new JButton();
+        send = new JButton();
         send.setText("OK");
         send.setBounds(0, 0, 150, 100);
         send.setFocusable(false);
         send.setFont(new Font("Arial", Font.BOLD, 20));
+        send.addActionListener(this);
 
-        JButton back = new JButton();
+        back = new JButton();
         back.setText("←");
         back.setBounds(0, 100, 75, 50);
         back.setFocusable(false);
         back.setFont(new Font("Arial", Font.BOLD, 30));
+        back.addActionListener(this);
         
-        JButton reset = new JButton();
+        reset = new JButton();
         reset.setText("Reset");
         reset.setBounds(75, 100, 75, 50);
         reset.setFocusable(false);
         reset.setFont(new Font("Arial", Font.BOLD, 13));
+        reset.addActionListener(this);
     
        
         
@@ -139,8 +147,7 @@ public class Tablero implements ActionListener {
     int[] numIngresado = new int[4];
     int k=0;
     
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    public void ButtonActionPerformed(ActionEvent e) {
         
         JButton source = (JButton) e.getSource();
         
@@ -185,6 +192,17 @@ public class Tablero implements ActionListener {
             System.out.print(numIngresado[i] + " ");
         }
         System.out.println("");
+        
+        
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+         if(e.getSource() == this.reset){
+             this.frame.dispose();
+             Game juego = new Game();
+             juego.startGame(this.jugador);
+         }
     }
     
 }
