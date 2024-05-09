@@ -5,15 +5,41 @@ import view.*;
 
 public class Game {
     
-    public void startGame(Player jugador){
+    public void startGame(Player player){
         
         // Starts the game
+        Game juego = new Game();
         
-        Board tablero = new Board(jugador);
+        int[] nums = new int[4];
+        juego.createNumber(nums);
+        
+        for(int i = 0; i < nums.length; i++){///
+            System.out.print(nums[i] + " ");/// Temp?
+        }
+        System.out.println(""); ///
+        
+        Board tablero = new Board(player, nums);
     }
     
-    public void compareNums(){
+    public int[] compareNums(int[] rndNum, int[] guessNum, int[] result){
         
+        int counter = 0;
+        int rightPos = 0;        
+        
+        for (int i = 0; i < guessNum.length; i++){
+            boolean res = search(rndNum, guessNum[i]);
+            if(!res){
+                counter++;
+                if(guessNum[i] == rndNum[i]){
+                    rightPos++;
+                }
+            } 
+        }
+        counter -= rightPos;
+        result[0] = counter;
+        result[1] = rightPos;
+                    
+        return result;
     }
     
     public void showStats(){

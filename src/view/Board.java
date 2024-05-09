@@ -12,16 +12,19 @@ import java.awt.geom.RoundRectangle2D;
 
 public class Board implements ActionListener {
     
-    Player jugador;
+    Player player;
+    int[] nums;
     MyFrame frame;
-    TextField[][] textFields;
+    TextField[][] textFieldsNums;
+    TextField[][] textFieldsHints;
     JButton[][] keyboardButtons;
     JButton reset;
     JButton back;
     JButton send;
     
-    public Board(Player jugador){
-        this.jugador = jugador;
+    public Board(Player player, int[] nums){
+        this.nums = nums;
+        this.player = player;
         frame = new MyFrame(0, 0 , 700, 800, "GUESSY");
         frame.setLocationRelativeTo(null);
         
@@ -32,14 +35,14 @@ public class Board implements ActionListener {
         redpanel.setLayout(null);
         
         JLabel label = new JLabel();
-        label.setText("Jugador: " + jugador.getUsername());
+        label.setText("Jugador: " + player.getUsername());
         label.setBounds(45, 0, 100, 15);
         
         JPanel matrix = new JPanel(new GridLayout(12, 4, 40, 10));
         matrix.setBackground(Color.LIGHT_GRAY);
         matrix.setBounds(50, 20, 300, 500);
                                 
-        textFields = new TextField[12][4];
+        textFieldsNums = new TextField[12][4];
         
          for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 4; j++) {
@@ -47,7 +50,7 @@ public class Board implements ActionListener {
                 textField.setEditable(false); 
                 textField.setFocusable(false); 
                 textField.setBackground(Color.LIGHT_GRAY.brighter());             
-                textFields[i][j] = textField;
+                textFieldsNums[i][j] = textField;
                 matrix.add(textField);
             }
         }
@@ -62,6 +65,8 @@ public class Board implements ActionListener {
         hints.setBackground(Color.LIGHT_GRAY);
         hints.setBounds(45, 20, 100 , 500);
         
+        textFieldsHints = new TextField[12][2];
+        
         for (int i = 0; i < 12; i++){
             for (int j = 0; j < 2; j++){
                 TextField textField = new TextField();
@@ -73,6 +78,7 @@ public class Board implements ActionListener {
                 } else {
                     textField.setBackground(Color.GREEN.darker());
                 }
+                textFieldsHints[i][j] = textField;
                 hints.add(textField);
                 
             }
@@ -109,6 +115,7 @@ public class Board implements ActionListener {
         send.setBounds(0, 0, 150, 100);
         send.setFocusable(false);
         send.setFont(new Font("Arial", Font.BOLD, 20));
+        send.setEnabled(true);        
         send.addActionListener(this);
 
         back = new JButton();
@@ -143,21 +150,24 @@ public class Board implements ActionListener {
         comms.add(reset);
     }
 
+    // Atributtes don't forget to put them up when your done with this :)
     int max = 0;
     int[] numIngresado = new int[4];
     int k=0;
+    int fila = 0;
     
     public void ButtonActionPerformed(ActionEvent e) {
         
         JButton source = (JButton) e.getSource();
+        send.setEnabled(false);
         
-        
-        while(max < 4){
+        if(max < 4){
             
             int row = -1, col = -1;
+            
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    if (e.getSource() == keyboardButtons[i][j]) {
+                    if (source == keyboardButtons[i][j]) {
                         row = i;
                         col = j;
                         keyboardButtons[i][j].setEnabled(false);
@@ -170,17 +180,22 @@ public class Board implements ActionListener {
             }
 
             if (row != -1 && col != -1) {
-                for (int i = 0; i < 12; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        if (i < 4 && textFields[i][j].getText().isEmpty()) {                            
-                            String currentText = textFields[i][j].getText();
-                            textFields[i][j].setText(currentText + "  " +source.getText());
-                            textFields[i][j].setFont(new Font("Arial", Font.BOLD, 20));                           
-                            numIngresado[k] = Integer.parseInt(source.getText());                            
-                            k += 1;
-                            max++;
-                            return;
+                
+                int i = this.fila;
+                
+                for (int j = 0; j < 4; j++) {
+                    if (this.textFieldsNums[i][j].getText().isEmpty()) {  
+                        
+                        String currentText = this.textFieldsNums[i][j].getText();
+                        this.textFieldsNums[i][j].setText(currentText + "  " + source.getText());
+                        this.textFieldsNums[i][j].setFont(new Font("Arial", Font.BOLD, 20));                           
+                        this.numIngresado[k] = Integer.parseInt(source.getText());                            
+                        this.k += 1;
+                        this.max++;
+                        if(this.max == 4){
+                            this.send.setEnabled(true);
                         }
+                        return;
                     }
                 }
                 
@@ -188,7 +203,7 @@ public class Board implements ActionListener {
             
         }
         
-        for(int i=0;i<numIngresado.length;i++){
+        for(int i = 0;i < this.numIngresado.length;i++){
             System.out.print(numIngresado[i] + " ");
         }
         System.out.println("");
@@ -198,11 +213,43 @@ public class Board implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-         if(e.getSource() == this.reset){
+        
+        Game game = new Game();
+        
+        if(e.getSource() == this.reset){
              this.frame.dispose();
-             Game juego = new Game();
-             juego.startGame(this.jugador);
+             
+             game.startGame(this.player);
+         } else if (e.getSource() == this.send){
+             
+             int[] result = new int[2];
+             game.compareNums(this.nums, this.numIngresado, result);
+             
+            int i = fila;
+            
+            for(int j = 0; j < 2; j++){
+               if (i < 12 && this.textFieldsHints[i][j].getText().isEmpty()){
+               String currentText = this.textFieldsHints[i][j].getText();
+               this.textFieldsHints[i][j].setText(currentText + "  " + result[j]);
+               this.textFieldsHints[i][j].setFont(new Font("Arial", Font.BOLD, 20));
+               }
+            }
+            
+            this.max = 0;
+            this.k = 0;
+            resetButtons();
+            this.fila++;
          }
+         
+         
+    }
+    
+    public void resetButtons(){
+        for (int i = 0; i < 3; i ++){
+            for(int j = 0; j < 3; j++){
+                this.keyboardButtons[i][j].setEnabled(true);
+            }
+        }
     }
     
 }

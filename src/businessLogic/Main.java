@@ -25,7 +25,7 @@ public class Main {
        
        
        Player jugador = new Player("Santty");
-       Board tablero = new Board(jugador);
+       Board tablero = new Board(jugador, nums);
         
         
         
