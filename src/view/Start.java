@@ -19,8 +19,11 @@ public class Start implements ActionListener{
     JButton comenzar;
     JButton salir;
     JTextField textField;
+    Player[] players;
     
     public Start(){
+        
+        
         
         JLabel label = new JLabel();
         label.setText("Usuario:");

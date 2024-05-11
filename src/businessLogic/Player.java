@@ -8,12 +8,14 @@ public class Player {
     private String username;
     private LocalDate fecha;
     private int contador;
-    private boolean victoria;
+    private int id;
+    private static int genId = 0;
     
     public Player(String username){
         this.username = username;
         this.fecha = LocalDate.now();
-        this.victoria = false;
+        this.contador = 0;
+        this.id = Player.genId++;
     }
     
     public String getUsername(){
@@ -34,21 +36,17 @@ public class Player {
         return this.fecha;
     }
     
-    public boolean getVictoria(){
-        return this.victoria;
-    }
-    
     public void incrementarIntento(){
         this.contador++;
     }
     
-    public void gana(){
-        this.victoria = true;
+    public int getId(){
+        return this.id;
     }
 
     @Override
     public String toString() {
-        return "Jugador{" + "username: " + username + ", fecha:" + fecha + '}';
+        return "Jugador{" + "username: " + this.username + ", fecha:" + this.fecha + ", ID: " + this.getId() + ", Contador: " + this.getContador() +'}';
     }
     
     

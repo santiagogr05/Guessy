@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.RoundRectangle2D;
+
 
 public class Board implements ActionListener {
     
@@ -23,10 +23,11 @@ public class Board implements ActionListener {
     JButton send;
     
     public Board(Player player, int[] nums){
+        
         this.nums = nums;
         this.player = player;
-        frame = new MyFrame(0, 0 , 700, 800, "GUESSY");
-        frame.setLocationRelativeTo(null);
+        this.frame = new MyFrame(0, 0 , 700, 800, "GUESSY");
+        this.frame.setLocationRelativeTo(null);
         
         JPanel redpanel = new JPanel(new GridLayout(12, 4, 50, 10));
         redpanel.setBackground(Color.LIGHT_GRAY);
@@ -36,13 +37,13 @@ public class Board implements ActionListener {
         
         JLabel label = new JLabel();
         label.setText("Jugador: " + player.getUsername());
-        label.setBounds(45, 0, 100, 15);
+        label.setBounds(45, 0, 200, 15);
         
         JPanel matrix = new JPanel(new GridLayout(12, 4, 40, 10));
         matrix.setBackground(Color.LIGHT_GRAY);
         matrix.setBounds(50, 20, 300, 500);
                                 
-        textFieldsNums = new TextField[12][4];
+        this.textFieldsNums = new TextField[12][4];
         
          for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 4; j++) {
@@ -50,7 +51,7 @@ public class Board implements ActionListener {
                 textField.setEditable(false); 
                 textField.setFocusable(false); 
                 textField.setBackground(Color.LIGHT_GRAY.brighter());             
-                textFieldsNums[i][j] = textField;
+                this.textFieldsNums[i][j] = textField;
                 matrix.add(textField);
             }
         }
@@ -65,7 +66,7 @@ public class Board implements ActionListener {
         hints.setBackground(Color.LIGHT_GRAY);
         hints.setBounds(45, 20, 100 , 500);
         
-        textFieldsHints = new TextField[12][2];
+        this.textFieldsHints = new TextField[12][2];
         
         for (int i = 0; i < 12; i++){
             for (int j = 0; j < 2; j++){
@@ -78,7 +79,7 @@ public class Board implements ActionListener {
                 } else {
                     textField.setBackground(Color.GREEN.darker());
                 }
-                textFieldsHints[i][j] = textField;
+                this.textFieldsHints[i][j] = textField;
                 hints.add(textField);
                 
             }
@@ -94,14 +95,14 @@ public class Board implements ActionListener {
         keyboard.setBackground(Color.LIGHT_GRAY);
         keyboard.setBounds(50, 10, 300, 150);
         
-        keyboardButtons = new JButton[3][3];
+        this.keyboardButtons = new JButton[3][3];
         
         for (int i = 1; i <= 9; i++) {
-            JButton button = new JButton(Integer.toString(i)); // Create button with number label
+            JButton button = new JButton(Integer.toString(i));
             button.setFocusable(false);
             button.setBorder(BorderFactory.createEmptyBorder());
             button.addActionListener(this::ButtonActionPerformed);
-            keyboardButtons[(i - 1) / 3][(i - 1) % 3] = button; 
+            this.keyboardButtons[(i - 1) / 3][(i - 1) % 3] = button; 
             keyboard.add(button); 
         }
         
@@ -110,33 +111,33 @@ public class Board implements ActionListener {
         comms.setBounds(420, 10, 150, 150);
         comms.setLayout(null);
         
-        send = new JButton();
-        send.setText("OK");
-        send.setBounds(0, 0, 150, 100);
-        send.setFocusable(false);
-        send.setFont(new Font("Arial", Font.BOLD, 20));
-        send.setEnabled(true);        
-        send.addActionListener(this);
+        this.send = new JButton();
+        this.send.setText("OK");
+        this.send.setBounds(0, 0, 150, 100);
+        this.send.setFocusable(false);
+        this.send.setFont(new Font("Arial", Font.BOLD, 20));
+        this.send.setEnabled(false);        
+        this.send.addActionListener(this);
 
-        back = new JButton();
-        back.setText("←");
-        back.setBounds(0, 100, 75, 50);
-        back.setFocusable(false);
-        back.setFont(new Font("Arial", Font.BOLD, 30));
-        back.addActionListener(this);
+        this.back = new JButton();
+        this.back.setText("←");
+        this.back.setBounds(0, 100, 75, 50);
+        this.back.setFocusable(false);
+        this.back.setFont(new Font("Arial", Font.BOLD, 30));
+        this.back.addActionListener(this);
         
-        reset = new JButton();
-        reset.setText("Reset");
-        reset.setBounds(75, 100, 75, 50);
-        reset.setFocusable(false);
-        reset.setFont(new Font("Arial", Font.BOLD, 13));
-        reset.addActionListener(this);
+        this.reset = new JButton();
+        this.reset.setText("Reset");
+        this.reset.setBounds(75, 100, 75, 50);
+        this.reset.setFocusable(false);
+        this.reset.setFont(new Font("Arial", Font.BOLD, 13));
+        this.reset.addActionListener(this);
     
        
         
-        frame.add(redpanel);
-        frame.add(bluepanel);
-        frame.add(greenpanel);
+        this.frame.add(redpanel);
+        this.frame.add(bluepanel);
+        this.frame.add(greenpanel);
         
         redpanel.add(matrix);
         redpanel.add(label);
@@ -155,6 +156,7 @@ public class Board implements ActionListener {
     int[] numIngresado = new int[4];
     int k=0;
     int fila = 0;
+    JButton[] pressed = new JButton[4];
     
     public void ButtonActionPerformed(ActionEvent e) {
         
@@ -170,6 +172,7 @@ public class Board implements ActionListener {
                     if (source == keyboardButtons[i][j]) {
                         row = i;
                         col = j;
+                        this.pressed[max] = keyboardButtons[i][j];                                                                        
                         keyboardButtons[i][j].setEnabled(false);
                         break;
                     }
@@ -191,7 +194,7 @@ public class Board implements ActionListener {
                         this.textFieldsNums[i][j].setFont(new Font("Arial", Font.BOLD, 20));                           
                         this.numIngresado[k] = Integer.parseInt(source.getText());                            
                         this.k += 1;
-                        this.max++;
+                        this.max++;                        
                         if(this.max == 4){
                             this.send.setEnabled(true);
                         }
@@ -215,17 +218,18 @@ public class Board implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         
         Game game = new Game();
+        Stats stats = new Stats(this.player);
         
         if(e.getSource() == this.reset){
-             this.frame.dispose();
-             
+            
              game.startGame(this.player);
+             this.frame.dispose();
          } else if (e.getSource() == this.send){
              
              int[] result = new int[2];
              game.compareNums(this.nums, this.numIngresado, result);
              
-            int i = fila;
+            int i = this.fila;
             
             for(int j = 0; j < 2; j++){
                if (i < 12 && this.textFieldsHints[i][j].getText().isEmpty()){
@@ -239,9 +243,26 @@ public class Board implements ActionListener {
             this.k = 0;
             resetButtons();
             this.fila++;
+            this.player.incrementarIntento();
+            
+            if(this.fila == 12 || result[1] == 4){
+                
+                this.frame.dispose();
+                game.gameOver(this.player);
+                stats.saveStats();
+            }
+         } else if (e.getSource() == this.back){
+             
+             if (this.max > 0){
+                
+                this.textFieldsNums[fila][max-1].setText("");                 
+                this.pressed[this.max-1].setEnabled(true);
+                this.max--;
+                this.k--;
+                 
+             }
+            
          }
-         
-         
     }
     
     public void resetButtons(){

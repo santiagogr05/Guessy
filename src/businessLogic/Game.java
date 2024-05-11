@@ -5,6 +5,11 @@ import view.*;
 
 public class Game {
     
+    
+
+    Player player;
+    
+    
     public void startGame(Player player){
         
         // Starts the game
@@ -42,9 +47,20 @@ public class Game {
         return result;
     }
     
-    public void showStats(){
-        
-    }    
+//    public void saveStats(Player player){
+//        
+//        this.players[player.getId()] = player;
+//    }
+//    
+//    public void showStats(){
+//        
+//        for(int i = 0; i < 100; i++){
+//            if(this.players[i] != null){
+//                System.out.println(this.players[i]);
+//            }
+//        }
+//        
+//    }    
     
     public void createNumber(int[] nums){
         
@@ -84,5 +100,25 @@ public class Game {
         }
         return true;
     }
+    
+    public void gameOver(Player player){            
+   
+        if (player.getContador() == 12){
+            Loser loser = new Loser(player);
+        } else {
+            Winner winner = new Winner(player);
+        }
+        
+    }
+    
+//    public Player[] resizeArray(Player[] originalArray, int newSize) {
+//        Player[] newArray = new Player[newSize];
+//        int length = Math.min(originalArray.length, newSize);
+//        
+//        // Copy elements from the original array to the new array
+//        System.arraycopy(originalArray, 0, newArray, 0, length);
+//        
+//        return newArray;
+//    }
     
 }
