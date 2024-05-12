@@ -86,7 +86,12 @@ public class StatsWindow {
 
                     } else if (j == 2){
                         JLabel tries1 = new JLabel();        
-                        tries1.setText("" +StatsWindow.stats[i].getContador());
+                        
+                        if (StatsWindow.stats[i].getContador() == 12){
+                            tries1.setText("No Adivino");
+                        } else {
+                            tries1.setText("" +StatsWindow.stats[i].getContador());
+                        }
                         tries1.setBounds(440, height, 200, 40);
                         tries1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
                         tries1.setHorizontalAlignment(JLabel.CENTER);

@@ -49,6 +49,7 @@ public class Loser implements ActionListener{
         again.setBounds(180, 150, 100, 30);
         again.setFocusable(false);
         again.setBorder(BorderFactory.createEmptyBorder());
+        again.addActionListener(this);
         
         
         
@@ -57,6 +58,7 @@ public class Loser implements ActionListener{
         exit.setBounds(20, 150, 100, 30);
         exit.setFocusable(false);
         exit.setBorder(BorderFactory.createEmptyBorder());
+        exit.addActionListener(this);
         
         
         frame.add(panel);
@@ -70,11 +72,13 @@ public class Loser implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        Stats stats = new Stats(this.player);        
+        Stats stats = new Stats(this.player);
         
         if(e.getSource() == this.again){
             
+            this.frame.dispose();            
             Start start = new Start();
+            
             
         } else {
             
