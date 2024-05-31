@@ -59,8 +59,18 @@ public class Board implements ActionListener {
         
         JPanel bluepanel = new JPanel();
         bluepanel.setBackground(Color.LIGHT_GRAY);
-        bluepanel.setBounds(430, 10, 240, 540);
+        bluepanel.setBounds(430, 10, 240, 550);
         bluepanel.setLayout(null);
+
+        JLabel aciertos = new JLabel();
+        aciertos.setBounds(105, 5, 90, 10);
+        aciertos.setText("Aciertos");
+        aciertos.setForeground(Color.GREEN.darker());
+
+        JLabel coincidencia = new JLabel();
+        coincidencia.setBounds(20, 5, 90, 10);
+        coincidencia.setText("Coincidencias");
+        coincidencia.setForeground(Color.YELLOW.darker());
         
         JPanel hints = new JPanel(new GridLayout(12, 2, 20, 10));
         hints.setBackground(Color.LIGHT_GRAY);
@@ -143,6 +153,8 @@ public class Board implements ActionListener {
         redpanel.add(label);
         
         bluepanel.add(hints);
+        bluepanel.add(aciertos);
+        bluepanel.add(coincidencia);
         
         greenpanel.add(keyboard);
         greenpanel.add(comms);
@@ -151,7 +163,7 @@ public class Board implements ActionListener {
         comms.add(reset);
     }
 
-    // Atributtes don't forget to put them up when your done with this :)
+    // Attributes don't forget to put them up when you're done with this :)
     int max = 0;
     int[] numIngresado = new int[4];
     int k=0;
@@ -161,7 +173,10 @@ public class Board implements ActionListener {
     public void ButtonActionPerformed(ActionEvent e) {
         
         JButton source = (JButton) e.getSource();
-        send.setEnabled(false);
+        if (this.max != 4){
+            send.setEnabled(false);
+        }
+
         
         if(max < 4){
             
@@ -209,7 +224,7 @@ public class Board implements ActionListener {
         for(int i = 0;i < this.numIngresado.length;i++){
             System.out.print(numIngresado[i] + " ");
         }
-        System.out.println("");
+        System.out.println();
         
         
     }
@@ -251,6 +266,7 @@ public class Board implements ActionListener {
                 game.gameOver(this.player);
                 stats.saveStats();
             }
+            this.send.setEnabled(false);
          } else if (e.getSource() == this.back){
              
              if (this.max > 0){

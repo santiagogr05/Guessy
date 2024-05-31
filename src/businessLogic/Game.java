@@ -17,16 +17,16 @@ public class Game {
         
         int[] nums = new int[4];
         juego.createNumber(nums);
-        
-        for(int i = 0; i < nums.length; i++){///
-            System.out.print(nums[i] + " ");/// Temp?
+
+        for (int num : nums) {///
+            System.out.print(num + " ");/// Temp?
         }
-        System.out.println(""); ///
+        System.out.println(); ///
         
         Board tablero = new Board(player, nums);
     }
     
-    public int[] compareNums(int[] rndNum, int[] guessNum, int[] result){
+    public void compareNums(int[] rndNum, int[] guessNum, int[] result){
         
         int counter = 0;
         int rightPos = 0;        
@@ -43,8 +43,7 @@ public class Game {
         counter -= rightPos;
         result[0] = counter;
         result[1] = rightPos;
-                    
-        return result;
+
     }
     
 //    public void saveStats(Player player){
@@ -92,9 +91,9 @@ public class Game {
     public boolean search(int[] nums,int num){
         
         // search for a number into an array
-        
-        for(int i = 0; i < nums.length; i++){
-            if(num == nums[i]){
+
+        for (int j : nums) {
+            if (num == j) {
                 return false;
             }
         }

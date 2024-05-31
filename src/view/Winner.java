@@ -11,7 +11,7 @@ public class Winner implements ActionListener{
     MyFrame frame;
     JPanel panel;
     JLabel label1, label2, label3;
-    JButton again, exit;
+    JButton again, exit, stats;
     Player player;        
     
     public Winner(Player player){
@@ -23,7 +23,7 @@ public class Winner implements ActionListener{
         frame.setLayout(null);
         
         panel = new JPanel();
-        panel.setBounds(45, 25, 300, 200);
+        panel.setBounds(45, 25, 300, 280);
         panel.setBackground(Color.LIGHT_GRAY);
         panel.setLayout(null);
         
@@ -56,6 +56,13 @@ public class Winner implements ActionListener{
         exit.setFocusable(false);
         exit.setBorder(BorderFactory.createEmptyBorder());
         exit.addActionListener(this);
+
+        stats = new JButton();
+        stats.setText("Estadisticas");
+        stats.setBounds(80, 190, 120, 30);
+        stats.setFocusable(false);
+        stats.setBorder(BorderFactory.createEmptyBorder());
+        stats.addActionListener(this);
         
         
         frame.add(panel);
@@ -65,6 +72,7 @@ public class Winner implements ActionListener{
         panel.add(label3);
         panel.add(again);
         panel.add(exit);
+        panel.add(stats);
     }
 
     @Override
@@ -78,10 +86,15 @@ public class Winner implements ActionListener{
             Start start = new Start();
             
             
+        } else if(e.getSource() == this.stats){
+
+            stats.showStats();
+            this.frame.dispose();
+
         } else {
             
             this.frame.dispose();
-            stats.showStats();
+
             
         }
     }

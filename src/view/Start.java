@@ -20,6 +20,7 @@ public class Start implements ActionListener{
     JButton salir;
     JTextField textField;
     Player[] players;
+    JLabel label1;
     
     public Start(){
         
@@ -29,6 +30,11 @@ public class Start implements ActionListener{
         label.setText("Usuario:");
         label.setBounds(70, 65, 50, 15);
         label.setForeground(Color.BLACK);
+
+        label1 = new JLabel();
+        label1.setText("");
+        label1.setBounds(70, 25, 100, 15);
+        label1.setForeground(Color.BLACK);
         
         textField = new JTextField();
         textField.setBounds(125, 63, 150, 20);
@@ -60,6 +66,7 @@ public class Start implements ActionListener{
         
         frame.add(panel);
         panel.add(label);
+        panel.add(label1);
         panel.add(textField);
         panel.add(this.comenzar);
         panel.add(this.salir);
@@ -77,7 +84,8 @@ public class Start implements ActionListener{
             String user = this.textField.getText();
             
             if(user.equals("") || user.equals(" ")){
-                System.out.println("Please Type your Username!");
+
+                this.label1.setText("Ingrese un valor");
                 
             } else {                
                 Player player = new Player(user);

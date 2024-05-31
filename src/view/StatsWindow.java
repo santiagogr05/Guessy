@@ -4,12 +4,15 @@ import businessLogic.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
-public class StatsWindow {
+public class StatsWindow implements ActionListener {
 
     MyFrame frame;
     JPanel panel;
+    JButton exit, play;
     static Player[] stats = new Player[100];
 
     public StatsWindow(Player[] players) {
@@ -53,6 +56,20 @@ public class StatsWindow {
         tries.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         tries.setHorizontalAlignment(JLabel.CENTER);
         tries.setFont(new Font("Arial", Font.BOLD, 16));
+
+        exit = new JButton();
+        exit.setText("Salir");
+        exit.setBounds(20, 470, 100, 30);
+        exit.setFocusable(false);
+        exit.setBorder(BorderFactory.createEmptyBorder());
+        exit.addActionListener(this);
+
+        play = new JButton();
+        play.setText("Jugar");
+        play.setBounds(570, 470, 100, 30);
+        play.setFocusable(false);
+        play.setBorder(BorderFactory.createEmptyBorder());
+        play.addActionListener(this);
         
         // Add info users
         int height = 20;
@@ -105,7 +122,9 @@ public class StatsWindow {
         this.panel.add(username);
         this.panel.add(date);
         this.panel.add(tries);
-        
+        this.panel.add(exit);
+        this.panel.add(play);
+
         Dimension panelSize = new Dimension(720, height + 40); // Adjust width as needed
 
         panel.setPreferredSize(panelSize);
@@ -117,8 +136,19 @@ public class StatsWindow {
         
         this.frame.add(scrollPane);
 
+    }
 
-       
-        
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if(e.getSource() == this.exit){
+            this.frame.dispose();
+
+        } else if(e.getSource() == this.play){
+
+            this.frame.dispose();
+            Start start = new Start();
+        }
+
     }
 }

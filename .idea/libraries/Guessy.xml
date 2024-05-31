@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Guessy">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/Guessy.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
