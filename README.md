@@ -1,2 +1,6 @@
 # Guessy
-Game for guess a rnd numeber for the final programming lab
+Game for guessing a randmon number within 12 of less tries
+
+## Tecnologies
+- Java 17
+- Java Swing
