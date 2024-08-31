@@ -6,8 +6,9 @@ Game for guessing a randmon number within 12 of less tries
 - Java Swing
 
 ## Guide of ussage 
-- download Java 17 or more
+- download Java JDK 17 or more
 - clone the repo
+  
 ``` bash
 $ git clone https://github.com/santiagogr05/Guessy.git
 ```
